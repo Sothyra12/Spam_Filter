@@ -4,12 +4,17 @@ const messageInput = document.getElementById("message-input");
 const result = document.getElementById("result");
 const checkMessageButton = document.getElementById("check-message-btn");
 
-const helpRegex = /please help/i;
+// match the word "please help" or "assist me" in a case-insensitive way
+const helpRegex = /please help|assist me/i;
+
+// plus sign (+) matches the preceding element one or more times e.g. [0-9]+ matches one or more digits
+const dollarRegex = /[0-9]+ hundred|thousand|million|billion dollars/i;
 
 // check more than one regex
 const denyList = [helpRegex];
 
-const isSpam = (msg) => helpRegex.test(msg);
+const isSpam = (msg) => denyList.some((regex) => regex.test(msg)); // This will return true if at least one of the regex in the denyList array is found in the message
+// const isSpam = (msg) => helpRegex.test(msg);
 // const isSpam = (msg) => msg.match(helpRegex); // Alternative solution except this will return an array of matches not a boolean like the above solution
 
 checkMessageButton.addEventListener("click", () => {
